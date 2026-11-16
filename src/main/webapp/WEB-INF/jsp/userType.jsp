@@ -5,6 +5,8 @@
         <title>RDA - LMS </title>
         <%@include file="./JSPF/header.jsp" %>
         <link rel="stylesheet" type="text/css" href="files/css/dataTables.searchHighlight.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.17/themes/default/style.min.css">
     </head>
     <body>
         <%@include file="./JSPF/loader.jsp" %>
@@ -39,7 +41,6 @@
                                                                         <tr>
                                                                             <th>Id</th>
                                                                             <th>User Type</th>
-                                                                            <th>Dashboard</th>
                                                                             <th>ModBy</th>
                                                                             <th>ModOn</th>
                                                                             <th style="width:1px;">Status</th>
@@ -116,7 +117,7 @@
             <script type="text/javascript" src="files/js/func.js"></script>
             <script type="text/javascript" src="files/js/autoNumeric.js"></script>
             <script type="text/javascript" src="files/js/dataTables.responsive.min.js"></script>
-            <script type="text/javascript" src="files/jstree/js/jstree.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.17/jstree.min.js"></script>
 
             <script>
                 $.fn.dataTable.ext.errMode = 'none';
@@ -261,33 +262,11 @@
                         });
 
 
-                var dashboard = new SlimSelect({
-                    select: '#dashboard',
-                    placeholder: "Select a Dashboard",
-                    searchHighlight: true,
-
-                    ajax: function (search, callback) {
-                        fetch('admin/search-dashboard', {
-                            method: 'POST',
-                            body: new URLSearchParams({search: search || ''})
-                        }).then(res => res.json()).then((data) => {
-                            callback(data);
-                        });
-                    },
-                    allowDeselect: true,
-                    deselectLabel: '<span class="red">✖</span>'
-                });
-                $('#dashboard').data('select', dashboard);
-
 
                 $('#saveBtn').click(function () {
 
                     if ($('#name').val().trim() === '') {
                         Swal.fire("Empty Name!", "Please Enter a Valid User Type Name !", "warning");
-                        return;
-                    }
-                    if ($('#dashboard').val() === null) {
-                        Swal.fire("Dashboard not Selected!", "Please Select a Dashboard !", "warning");
                         return;
                     }
                     if ($('#pages').val() === null) {
@@ -337,7 +316,6 @@
                                     method: 'POST',
                                     body: new URLSearchParams({
                                         name: document.getElementById('name').value,
-                                        dashboard: document.getElementById('dashboard').value,
                                         pages: JSON.stringify(selectPages)
                                     })
                                 }).then(response => {
@@ -396,7 +374,6 @@
                                     body: new URLSearchParams({
                                         id: $('#saveBtn').data('id'),
                                         name: document.getElementById('name').value,
-                                        dashboard: document.getElementById('dashboard').value,
                                         pages: JSON.stringify(selectPages)
                                     })
                                 }).then(response => {
@@ -439,9 +416,6 @@
 
                     $.post('admin/get-userType', {id: id}, function (result) {
 
-
-                        dashboard.setData([{value: result.dashboard, text: result.dashboard_name}]);
-                        dashboard.set(result.dashboard);
                         $('#name').val(result.name);
 
 
@@ -606,13 +580,12 @@
                 });
 
                 function clearForm() {
-                    $('#dashboard').data('select').set('');
                     $('#name').val('');
-                    var tree = $('#pages').jstree(true);
-                    var selectedNodes = tree.get_selected();
-                    selectedNodes.forEach(function (nodeId) {
-                        tree.uncheck_node(nodeId);
-                    });
+                    // var tree = $('#pages').jstree(true);
+                    // var selectedNodes = tree.get_selected();
+                    // selectedNodes.forEach(function (nodeId) {
+                    //     tree.uncheck_node(nodeId);
+                    // });
                 }
             </script>
     </body>

@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import lombok.Data;
+import tools.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
@@ -67,18 +69,13 @@ public class AdminService {
     }
 
     public User getUser(Integer id) throws Exception {
-        User user = userRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
-
-        if (user.getUserType() != null && user.getUserType().getId() != null) {
-            UserType utype = userTypeRepo.findById(user.getUserType().getId())
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            "User type not found for user id: " + id));
-            user.setUserTypeName(utype.getName());
-        }
-
+        System.out.println("hiiiiii");
+        User user = userRepo.findById(id).get();
+        UserType utype = userTypeRepo.findById(user.getUserType().getId()).get();
+        user.setUserTypeName(utype.getName());
         return user;
     }
+
 
     public Iterable<SlimSelectDTO> getUserTypeIdAndName(String search) {
         String value = search == null ? "%" : "%" + search.trim() + "%";
@@ -96,6 +93,10 @@ public class AdminService {
 //         return s1;
 //     }
 
+    public DataTablesResponse<UserTypeDataTable> getLetters(DataTableRequest param) throws Exception {
+        return userTypeDt.getData(UserTypeDataTable.class, param, "SELECT `id`,`name`,(SELECT `username` FROM `users` WHERE `id`=u.`mod_by`) AS `mod_by`,`mod_on`,`status` FROM `user_type` u WHERE TRUE ");
+    }
+
     public DataTablesResponse<UserTypeDataTable> getUserType(DataTableRequest param) throws Exception {
         return userTypeDt.getData(UserTypeDataTable.class, param, "SELECT `id`,`name`,(SELECT `username` FROM `users` WHERE `id`=u.`mod_by`) AS `mod_by`,`mod_on`,`status` FROM `user_type` u WHERE TRUE ");
     }
@@ -111,57 +112,52 @@ public class AdminService {
         return pageRepo.getSelectedPage(id);
     }
 
-//     public UserType saveUserType(String name, String dashboard, String pages) throws Exception {
+    public UserType saveUserType(String name, String dashboard, String pages) throws Exception {
 
-//         List<Integer> pageNumbers = Arrays.asList(new ObjectMapper().readValue(pages, Integer[].class));
+        List<Integer> pageNumbers = Arrays.asList(new ObjectMapper().readValue(pages, Integer[].class));
 
-//         String pagesJson = new ObjectMapper().writeValueAsString(pageNumbers);
+        String pagesJson = new ObjectMapper().writeValueAsString(pageNumbers);
 
-//         UserType page = new UserType();
-//         page.setDashboard(dashboard);
-//         page.setName(name);
-//         page.setPages(pagesJson);
-//         page.setStatus("active");
+        UserType page = new UserType();
+        page.setDashboard(dashboard);
+        page.setName(name);
+        page.setPages(pagesJson);
+        page.setStatus("active");
 
-//         page = userTypeRepo.save(page);
+        page = userTypeRepo.save(page);
 
-//         return page;
+        return page;
 
-//     }
+    }
 
-//     public UserType updateUserType(Integer id, String name, String dashboard, String pages) throws Exception {
+    public UserType updateUserType(Integer id, String name, String dashboard, String pages) throws Exception {
 
-//         List<Integer> pageNumbers = Arrays.asList(new ObjectMapper().readValue(pages, Integer[].class));
+        List<Integer> pageNumbers = Arrays.asList(new ObjectMapper().readValue(pages, Integer[].class));
 
-//         String pagesJson = new ObjectMapper().writeValueAsString(pageNumbers);
+        String pagesJson = new ObjectMapper().writeValueAsString(pageNumbers);
 
-//         UserType page = userTypeRepo.findById(id).get();
-//         page.setDashboard(dashboard);
-//         page.setName(name);
-//         page.setPages(pagesJson);
-//         page.setStatus("active");
+        UserType page = userTypeRepo.findById(id).get();
+        page.setDashboard(dashboard);
+        page.setName(name);
+        page.setPages(pagesJson);
+        page.setStatus("active");
 
-//         page = userTypeRepo.save(page);
+        page = userTypeRepo.save(page);
 
-//         return page;
+        return page;
 
-//     }
+    }
 
-//     public User saveUser(String name, String username, Integer userType, String address, Integer tpno, String email, String password, Integer empno, Integer designation) throws Exception {
-//         User user = new User();
-//         user.setUsername(username);
-//         user.setName(name);
-//         user.setUserType(AggregateReference.to(userType));
-//         user.setAddress(address);
-//         user.setMobile(tpno);
-//         user.setEmail(email);
-//         user.setPassword(password);
-//         user.setEmpNo(empno);
-//         user.setDesignation(AggregateReference.to(designation));
-//         user.setStatus("active");
-//         user = userRepo.save(user);
-//         return user;
-//     }
+    public User saveUser(String name, String username, Integer userType, String address, Integer tpno, String email, String password, Integer empno, Integer designation) throws Exception {
+        User user = new User();
+        user.setUsername(username);
+        user.setFull_name(name);
+        user.setUserType(AggregateReference.to(userType));
+        user.setEmail(email);
+        user.setStatus("active");
+        user = userRepo.save(user);
+        return user;
+    }
 
 //     public Salary saveSalary(Integer basic, Integer allowance, Double total, Integer deduct, Double net, Integer emp) throws Exception {
 //         Salary s1 = new Salary();
@@ -203,28 +199,23 @@ public class AdminService {
 //         return s1;
 //     }
 
-//     public User updateUser(Integer id, String name, String username, Integer userType, String address, Integer tpno, String email, String password, Integer empno, Integer designation) throws Exception {
+    public User updateUser(Integer id, String name, String username, Integer userType, String address, Integer tpno, String email, String password, Integer empno, Integer designation) throws Exception {
 
-//         User user = userRepo.findById(id).get();
-//         user.setUsername(username);
-//         user.setName(name);
-//         user.setUserType(AggregateReference.to(userType));
-//         user.setAddress(address);
-//         user.setMobile(tpno);
-//         user.setEmail(email);
-//         user.setPassword(password);
-//         user.setEmpNo(empno);
-//         user.setDesignation(AggregateReference.to(designation));
-//         user = userRepo.save(user);
-//         return user;
-//     }
+        User user = userRepo.findById(id).get();
+        user.setUsername(username);
+        user.setFull_name(name);
+        user.setUserType(AggregateReference.to(userType));
+        user.setEmail(email);
+        user = userRepo.save(user);
+        return user;
+    }
 
-//     public UserType deactivateUserType(Integer id) throws Exception {
-//         UserType utype = userTypeRepo.findById(id).get();
-//         utype.setStatus("deactivated");
-//         utype = userTypeRepo.save(utype);
-//         return utype;
-//     }
+    public UserType deactivateUserType(Integer id) throws Exception {
+        UserType utype = userTypeRepo.findById(id).get();
+        utype.setStatus("deactivated");
+        utype = userTypeRepo.save(utype);
+        return utype;
+    }
 
     public UserType reactivateUserType(Integer id) throws Exception {
         UserType utype = userTypeRepo.findById(id)

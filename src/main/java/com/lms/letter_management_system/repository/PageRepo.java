@@ -25,6 +25,6 @@ public interface PageRepo extends CrudRepository<Page, Integer> {
     @Query("SELECT (SELECT JSON_ARRAYAGG(JSON_OBJECT( 'odr',`odr`,'id',`id`,'parent',`parent`,'name',`name`,'level',`level`,'url',`url`)) FROM `pages`)as `all_page`")
     GetPagesDTO getPage();
 
-    @Query("SELECT `id`,`name`,`dashboard`,(SELECT JSON_ARRAYAGG(JSON_OBJECT( 'odr',`odr`,'id',`id`,'parent',`parent`,'name',`name`,'level',`level`,'url',`url`,'state',JSON_OBJECT('selected',IF(a.access IS NULL,CAST(FALSE AS JSON),CAST(TRUE AS JSON))))) FROM `pages` p LEFT JOIN (SELECT j.* FROM `user_type` t CROSS JOIN JSON_TABLE(t.`pages`,'$[*]' COLUMNS(`access` INT path '$[0]'))j WHERE t.`id`=:utid)a ON p.id=a.access)AS `all_page`  FROM `user_type` u WHERE id =:utid")
+    @Query("SELECT `id`,`name`,(SELECT JSON_ARRAYAGG(JSON_OBJECT( 'odr',`odr`,'id',`id`,'parent',`parent`,'name',`name`,'level',`level`,'url',`url`,'state',JSON_OBJECT('selected',IF(a.access IS NULL,CAST(FALSE AS JSON),CAST(TRUE AS JSON))))) FROM `pages` p LEFT JOIN (SELECT j.* FROM `user_type` t CROSS JOIN JSON_TABLE(t.`pages`,'$[*]' COLUMNS(`access` INT path '$[0]'))j WHERE t.`id`=:utid)a ON p.id=a.access)AS `all_page`  FROM `user_type` u WHERE id =:utid")
     GetPagesDTO getSelectedPage(@Param("utid") Integer utid);
 }

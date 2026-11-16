@@ -90,12 +90,7 @@
                                                                                 <input id="username"  type="text" name="username" class="form-control" required autocomplete="off">
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-lg-6 col-12">
-                                                                            <div class="form-group">
-                                                                                <label for="address">Address<span class="text-danger">*</span></label>
-                                                                                <input id="add" type="text" name="add" class="form-control"  required autocomplete="off">
-                                                                            </div>
-                                                                        </div>
+                                                                        
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
                                                                                 <label for="email">Email<span class="text-danger">*</span></label>
@@ -104,34 +99,8 @@
                                                                         </div>
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
-                                                                                <label for="Contact">Contact Number<span class="text-danger">*</span></label>
-                                                                                <input id="tp" type="text" name="tp" class="form-control"  required autocomplete="off">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-6 col-12">
-                                                                            <div class="form-group">
-                                                                                <label for="password">Password<span class="text-danger">*</span></label>
-                                                                                <input id="pw" type="text" name="pw" class="form-control"  required autocomplete="off">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-6 col-12">
-                                                                            <div class="form-group">
-                                                                                <label for="empNumber">Employee Number<span class="text-danger">*</span></label>
-                                                                                <input id="emp" type="text" name="emp" class="form-control"  required autocomplete="off">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-lg-6 col-12">
-                                                                            <div class="form-group">
                                                                                 <label for="user_type">User Type<span class="text-danger">*</span></label>
                                                                                 <select id="user_type" name="user_type" class="" required autocomplete="off">
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>  
-                                                                        <div class="col-lg-6 col-12">
-                                                                            <div class="form-group">
-                                                                                <label for="user_designation">Designation<span class="text-danger">*</span></label>
-                                                                                <select id="user_designation" name="user_designation" class="" required autocomplete="off">
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -272,23 +241,6 @@
                 allowDeselect: true,
                 deselectLabel: '<span class="red">✖</span>'
             });
-            var user_designation = new SlimSelect({
-                select: '#user_designation',
-                placeholder: "Select user designation",
-                searchHighlight: true,
-
-                ajax: function (search, callback) {
-                    fetch('admin/search-user-designation', {
-                        method: 'POST',
-                        body: new URLSearchParams({search: search || ''})
-                    }).then(res => res.json()).then((data) => {
-                        callback(data);
-                    });
-                },
-                allowDeselect: true,
-                deselectLabel: '<span class="red">✖</span>'
-            });
-            $('#user_type').data('select', user_type);
 
             $(document).on('click', '.editrec', function () {
                 loadDiv($('#tableSection'));
@@ -360,12 +312,7 @@
                 formData.append('name', $('#name').val().trim());
                 formData.append('username', $('#username').val().trim());
                 formData.append('type', $('#user_type').val());
-                formData.append('address', $('#add').val().trim());
-                formData.append('tpno', $('#tp').val());
                 formData.append('email', $('#email').val().trim());
-                formData.append('password', $('#pw').val().trim());
-                formData.append('empno', $('#emp').val());
-                formData.append('designation', $('#user_designation').val());
 
                 Swal.fire({
                     title: 'Are you sure?',

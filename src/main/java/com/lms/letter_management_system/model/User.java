@@ -21,7 +21,7 @@ public class User {
   private Integer id;
   private String username;
   private String full_name;
-  // private String user_type;
+  private String email;
   private AggregateReference<UserType, Integer> userType;
   @Transient
   private String userTypeName;

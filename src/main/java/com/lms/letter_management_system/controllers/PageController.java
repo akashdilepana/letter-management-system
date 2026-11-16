@@ -55,11 +55,10 @@ public class PageController {
         return "userType";
     }
 
-    @GetMapping("/attendance")
-    public String attendance() {
-        return "attendance";
+    @GetMapping("/letters")
+    public String letters() {
+        return "letter";
     }
-
     @GetMapping("/salarySlip")
     public String sallarySlip() {
 //        Integer uid = (Integer) session.getAttribute("uid");
