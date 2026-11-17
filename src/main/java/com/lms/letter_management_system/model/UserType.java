@@ -32,7 +32,7 @@ public class UserType {
     private Integer id;
     private String name;
     private String pages;
-    private String dashboard;
+    // private String dashboard;
 
     @CreatedBy
     private Integer entBy;

@@ -149,31 +149,35 @@
                         {"data": "name"},
                         {"data": "modBy"},
                         {"data": "modOn"},
-                        {"data": "status"}
+                        {
+                            "data": "status",
+                            "render": function (data, type) {
+                                if (type !== 'display') return data;
+                                return data === 'deactive'
+                                    ? '<label class="label label-danger" style="white-space: nowrap">Deactivated</label>'
+                                    : '<label class="label label-success" style="white-space: nowrap">Active</label>';
+                            }
+                        },
+                        {
+                            "data": null,
+                            "orderable": false,
+                            "searchable": false,
+                            "className": "text-center",
+                            "render": function (data, type, row) {
+                                if (row.status === 'deactive') {
+                                    return '<a href="javascript:void(0)" class="rerec"><i class="feather icon-refresh-cw f-w-600 f-16 text-c-blue"></i></a>';
+                                }
+                                return '<a href="javascript:void(0)" class="editrec"><i class="icon feather icon-edit f-w-600 f-16 m-r-10 text-c-green"></i></a>' +
+                                       '<a href="javascript:void(0)" class="delrec"><i class="feather icon-trash-2 f-w-600 f-16 text-danger"></i></a>';
+                            }
+                        }
                     ], "language": {
                         'loadingRecords': '&nbsp;',
                         'processing': '<div class="loader2"></div>'
                     }, "createdRow": function (row, data) {
-                        let action_td = document.createElement('td');
-                        $(action_td).addClass('text-center');
-                        if (data['status'] === 'deactivated') {
-                            $(action_td).append('<a href="javascript:void(0)" class="rerec"><i class="feather icon-refresh-cw f-w-600 f-16 text-c-blue"></i></a>');
-                        } else {
-                            $(action_td).append('<a href="javascript:void(0)" class="editrec"><i class="icon feather icon-edit f-w-600 f-16 m-r-10 text-c-green"></i></a><a href="javascript:void(0)" class="delrec"><i class="feather icon-trash-2 f-w-600 f-16 text-danger"></i></a>');
-                        }
-                        $(row).append(action_td);
-                        setTableStatus($(row).find('td').eq(4));
                         $(row).data('id', data['id']);
                     }
                 });
-
-                function setTableStatus(td) {
-                    if ($(td).html().trim().startsWith('active')) {
-                        $(td).html('<label class="label label-success" style="white-space: nowrap">Active</label>');
-                    } else if ($(td).html() === 'deactivated') {
-                        $(td).html('<label class="label label-danger" style="white-space: nowrap">Deactivated</label>');
-                    }
-                }
 
                 $('#addUserTypeBtn').click(function () {
                     $('#saveBtn').data('mode', 'save');

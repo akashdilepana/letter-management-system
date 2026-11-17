@@ -136,6 +136,7 @@
         <script type="text/javascript" src="files/js/autoNumeric.js"></script>
         <script type="text/javascript" src="files/js/dataTables.responsive.min.js"></script>
         <script type="text/javascript" src="files/js/dataTables.searchHighlight.min.js"></script>
+        <script type="text/javascript" src="files/js/dataTables.searchHighlight.min.js"></script>
         <script>
 
             $.fn.dataTable.ext.errMode = 'none';
@@ -176,7 +177,7 @@
                 }, "createdRow": function (row, data) {
                     let action_td = document.createElement('td');
                     $(action_td).addClass('text-center');
-                    if (data['status'] === 'deactivated') {
+                    if (data['status'] === 'deactive') {
                         $(action_td).append('<a href="javascript:void(0)" class="rerec"><i class="feather icon-refresh-cw f-w-600 f-16 text-c-blue"></i></a>');
                     } else {
                         $(action_td).append('<a href="javascript:void(0)" class="editrec"><i class="icon feather icon-edit f-w-600 f-16 m-r-10 text-c-green"></i></a><a href="javascript:void(0)" class="delrec"><i class="feather icon-trash-2 f-w-600 f-16 text-danger"></i></a>');
@@ -184,7 +185,7 @@
                     $(row).append(action_td);
                     var temp = '<div style="white-space:nowrap;"><img src=user_img?name=' + data['username'] + ' onerror="this.onerror=null; this.src=\'files/images/user.png\'"  class="img-radius img-40 align-top m-r-15" height="40" style="object-fit: cover;">' +
                             '<div class="d-inline-block">' +
-                            ' <h6 style="word-break: break-all;word-wrap: break-word;" class="m-b-0">' + data['name'] + '</h6><p class="text-muted m-b-0">' + data['username'] + '</p></div></div>';
+                            ' <h6 style="word-break: break-all;word-wrap: break-word;" class="m-b-0">' + data['fullName'] + '</h6><p class="text-muted m-b-0">' + data['username'] + '</p></div></div>';
                     $(row).find('td').eq(0).html(temp);
                     setTableStatus($(row).find('td').eq(4));
                     $(row).data('id', data['id']);
@@ -194,7 +195,7 @@
             function setTableStatus(td) {
                 if ($(td).html().trim().startsWith('active')) {
                     $(td).html('<label class="label label-success" style="white-space: nowrap">Active</label>');
-                } else if ($(td).html() === 'deactivated') {
+                } else if ($(td).html() === 'deactive') {
                     $(td).html('<label class="label label-danger" style="white-space: nowrap">Deactivated</label>');
                 }
             }
@@ -248,8 +249,9 @@
                 fetch('admin/user/' + id).then(resp => resp.json())
                         .then((data) => {
                             clearForm();
-                            $('#name').val(data.name);
+                            $('#name').val(data.full_name);
                             $('#username').val(data.username);
+                            $('#email').val(data.email);
                             if (data.userType) {
                                 user_type.setData([{value: data.userType.id, text: data.userTypeName}]);
                                 user_type.set(data.userType.id);

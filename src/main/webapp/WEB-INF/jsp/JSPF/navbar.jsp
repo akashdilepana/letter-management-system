@@ -5,9 +5,9 @@
             <a class="mobile-menu" id="mobile-collapse" href="javascript:void(0)">
                 <i class="feather icon-menu"></i>
             </a>
-            <a href="index.html">
-                <img class="img-fluid" src="files/images/white.png" alt="fintrex DropInNet">
-            </a>
+            <!-- <a href="index.html">
+                <img class="img-fluid" src="files/images/user.png" alt="fintrex DropInNet">
+            </a> -->
             <a class="mobile-options">
                 <i class="feather icon-more-horizontal"></i>
             </a>
@@ -33,8 +33,8 @@
             %>
             <ul class="nav-left">
                 <li>
-                    <!--<h4 class="text-danger m-t-20"> **UAT** </h4>-->
-                    <i class='fas fa-comments' style='font-size:20px; margin-top: 18px;'></i>
+                    <h4 class="text-danger m-t-20"> **UAT** </h4>
+                    <!-- <i class='fas fa-comments' style='font-size:20px; margin-top: 18px;'></i> -->
                 </li>
             </ul>
             <%

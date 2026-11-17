@@ -90,7 +90,14 @@
         if (data.icon) {
             let span1 = document.createElement('span');
             $(span1).addClass('pcoded-micon');
-            $(span1).html('<i class="' + data.icon + '">');
+            let icon = document.createElement('i');
+            let iconClass = String(data.icon).trim();
+            // Font Awesome 4 needs the base `fa` class in addition to names such as `fa-user`.
+            if (/^fa-[\w-]+$/.test(iconClass)) {
+                iconClass = 'fa ' + iconClass;
+            }
+            icon.className = iconClass;
+            span1.appendChild(icon);
             $(a).append(span1);
         }
 

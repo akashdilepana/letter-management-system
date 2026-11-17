@@ -21,7 +21,7 @@ public class LoginService {
         return serv.findByUsername(username).orElse(null);
     }
 
-    public String getDashboard(Integer userTypeId) {
-        return ut.findById(userTypeId).get().getDashboard();
-    }
+    // public String getDashboard(Integer userTypeId) {
+    //     return ut.findById(userTypeId).get().getDashboard();
+    // }
 }

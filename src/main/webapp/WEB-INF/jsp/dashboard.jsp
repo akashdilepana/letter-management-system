@@ -67,97 +67,50 @@
                                     <div class="page-wrapper">
                                         <div class="page-body">
 
-                                            <!--USER DASHBOARD  -->
-                                            <div class="container-fluid mt-4">
-                                                <div class="row">
-                                                    <!-- Left Column -->
-                                                    <div class="col-md-3">
-                                                        <div class="section-box bg-teal">
-                                                            <h5><b>Daily Quote</b></h5>
-                                                            <br>
-                                                            <p>"An eye for an eye only ends up making the whole world blind."<br><strong>- M.K. Gandhi -</strong></p>
-                                                        </div>
-                                                        <div class="section-box bg-pink">
-                                                            <h5><b>My Suggestions</b> </h5>
-                                                            <br>
-                                                            <div id="formSection">
-                                                                <div class="form-group">
-                                                                    <label>Idea</label>
-                                                                    <input type="text" name="idea" id="idea" class="form-control">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label>Employee No</label>
-                                                                    <input type="text" name="empNo" id="empNo" class="form-control">
-                                                                </div>
-                                                                <button  id="savebtn" class="btn btn-success btn-sm">+ Add</button>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="section-box bg-teal">
-                                                            <h5>Intranet Links</h5>
-                                                            <br>
-                                                            <p>&lt;&gt;</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Center Column -->
-                                                    <div class="col-md-6">
-                                                        <div class="profile-card text-center mb-3">
-                                                            <h3 name="emp_name" id="emp_name"><%=session.getAttribute("name")%></h3>
-                                                            <p name="emp_des" id="emp_des"><%=session.getAttribute("designation")%></p>
-                                                            <img src="files/images/PROFILE1.jpg" class="profile-pic mb-3" alt="User Image">
-                                                            <p><strong>Employee No:</strong><span name="emp_no" id="emp_no"><%=session.getAttribute("empNo")%></span></p>
-                                                            <p><strong>Mobile:</strong><span name="emp_mobile" id="emp_mobile"><%=session.getAttribute("mobile")%></span></p>
-                                                            <p><strong>Email:</strong> <span name="emp_email" id="emp_email"><%=session.getAttribute("email")%></span></p>
-                                                            <p><strong>Address:</strong> <span name="emp_add" id="emp_add"><%=session.getAttribute("add")%></span></p>
-                                                        </div>
-
-                                                        <div class="section-box">
-                                                            <h5>Welcome Aboard</h5>
-                                                            <br>
-                                                            <div id="newEmpWelcome">
-                                                                <!-- Show new employee -->
-
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="section-box bg-blue">
-                                                            <h5><b>Vision & Mission</b></h5>
-                                                            <br>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="ml-3">
-                                                                    <h6><b>Vision</b></h6>
-                                                                    <p>To be the most beloved dining destination, known for exceptional flavors, warm hospitality, and culinary innovation.</p>
-                                                                    <h6><b>Mission</b></h6>
-                                                                    <p>To consistently deliver delightful food experiences made with fresh ingredients, served with heart, in a welcoming environment for every guest.</p>
-                                                                </div>
+                                            <div class="container-fluid mb-4">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-4 mb-3">
+                                                        <div class="card text-white bg-primary h-100">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">All Letters</h5>
+                                                                <h2 id="allLettersCount">—</h2>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <!-- Right Column -->
-                                                    <div class="col-md-3">
-                                                        <div class="section-box bg-teal">
-                                                            <h5><b>My Workflow Items</b></h5>
-                                                            <br>
-                                                            <p>You don't have any pending approvals for now</p>
+                                                    <div class="col-md-4 mb-3">
+                                                        <div class="card text-white bg-success h-100">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Replied Letters</h5>
+                                                                <h2 id="repliedLettersCount">—</h2>
+                                                            </div>
                                                         </div>
-                                                        <div class="section-box bg-pink">
-                                                            <h5><b>Company News</b></h5>
-                                                            <br>
-                                                            <ul class="list-unstyled">
-                                                                <li><strong>11 DEC 2024</strong><br>summit - New High Impact Goals<br><small>We're broadening our perspective... <a href="#">More</a></small></li>
-                                                                <hr>
-                                                                <li><strong>01 MAY 2025</strong><br>summit High Impact Goals<br><small>Goal 01 is to reduce carbon... <a href="#">More</a></small></li>
-                                                                <hr>
-                                                                <li><strong>01 MAY 2025</strong><br>summit Core Values<br><small>Our customers need to trust us... <a href="#">More</a></small></li>
-                                                            </ul>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <div class="card text-white bg-warning h-100">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Not Replied</h5>
+                                                                <h2 id="notRepliedLettersCount">—</h2>
+                                                            </div>
                                                         </div>
-                                                        <div class="section-box bg-teal">
-                                                            <h5>Employee Directory</h5>
-                                                            <br>
-                                                            <input type="text" class="form-control" placeholder="Search by name, role, or ID">
-                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-12 text-right">
+                                                        <a class="btn btn-outline-primary mr-2" href="<%=request.getContextPath()%>/letters">View Letters</a>
+                                                        <a class="btn btn-primary" href="<%=request.getContextPath()%>/letters?new=1">+ Add Letter</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                                        <h5 class="mb-0">Letter Activity</h5>
+                                                        <select id="letterChartPeriod" class="form-control" style="max-width: 150px" aria-label="Chart time range">
+                                                            <option value="day">Day</option>
+                                                            <option value="week">Week</option>
+                                                            <option value="month">Month</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="card-body" style="height: 340px">
+                                                        <canvas id="letterActivityChart" aria-label="Letters by reply status" role="img"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,7 +130,61 @@
         <script type="text/javascript" src="files/js/func.js"></script>
         <script type="text/javascript" src="files/js/autoNumeric.js"></script>
         <script type="text/javascript" src="files/js/dataTables.responsive.min.js"></script>
+        <script type="text/javascript" src="files/js/Chart.js"></script>
         <script>
+            const dashboardBase = '<%=request.getContextPath()%>/dashboard';
+            let letterActivityChart;
+
+            fetch(dashboardBase + '/letter-stats')
+                .then(response => {
+                    if (!response.ok) throw new Error('Could not load letter counts.');
+                    return response.json();
+                })
+                .then(counts => {
+                    $('#allLettersCount').text(counts.allLetters);
+                    $('#repliedLettersCount').text(counts.repliedLetters);
+                    $('#notRepliedLettersCount').text(counts.notRepliedLetters);
+                })
+                .catch(error => console.error(error));
+
+            function loadLetterChart(period) {
+                fetch(dashboardBase + '/letter-chart?period=' + encodeURIComponent(period))
+                    .then(response => {
+                        if (!response.ok) throw new Error('Could not load the letter chart.');
+                        return response.json();
+                    })
+                    .then(data => {
+                        const chartData = {
+                            labels: data.labels,
+                            datasets: [
+                                { label: 'All Letters', data: data.allLetters, backgroundColor: '#4680ff' },
+                                { label: 'Replied', data: data.repliedLetters, backgroundColor: '#2ed8b6' },
+                                { label: 'Not Replied', data: data.notRepliedLetters, backgroundColor: '#ffb64d' }
+                            ]
+                        };
+                        if (letterActivityChart) {
+                            letterActivityChart.data = chartData;
+                            letterActivityChart.update();
+                        } else {
+                            letterActivityChart = new Chart(document.getElementById('letterActivityChart'), {
+                                type: 'bar',
+                                data: chartData,
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+                                }
+                            });
+                        }
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadLetterChart($('#letterChartPeriod').val());
+            $('#letterChartPeriod').on('change', function () {
+                loadLetterChart(this.value);
+            });
+
             fetch('dashboard/new-emp')
                     .then(res => res.json())
                     .then(data => {

@@ -25,7 +25,7 @@
                                                 <div class="col-lg-10 offset-lg-1 col-xl-8 offset-xl-2 col-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h6>Users</h6>
+                                                            <h6>Letters</h6>
                                                             <div class="card-header-right">
                                                                 <ul class="list-unstyled card-option">
                                                                     <li><i class="feather icon-maximize full-card"></i></li>
@@ -37,13 +37,13 @@
                                                                 <table class="table table-hover table-bordered m-b-0" id="tbll">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Id</th>
                                                                             <th>S/N</th>
+                                                                            <th>Received Date</th>
                                                                             <th>Letter My No</th>
                                                                             <th>Address TO</th>
                                                                             <th>Subject</th>
                                                                             <th>Sent By</th>
-                                                                            <th style="width:1px;">Status</th>
+                                                                            <th>Reply</th>
                                                                             <th style="width:1px;">Action</th>
                                                                         </tr>
                                                                     </thead>
@@ -66,7 +66,7 @@
                                                 <div class="col-lg-8 offset-lg-2 col-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h6>Add Letter</h6>
+                                                            <h6>Save Letter</h6>
                                                             <div class="card-header-right">
                                                                 <ul class="list-unstyled card-option">
                                                                     <li><i class="feather icon-x cls-card"></i></li>
@@ -74,20 +74,25 @@
                                                             </div>
                                                         </div>
                                                         <div class="card-block p-b-0">
+                                                            <form id="letterForm" enctype="multipart/form-data">
                                                             <div class="row">
                                                                 <div class="col-12 col-lg-12">
                                                                     <div class="row">
 
+                                                                        <div class="col-12">
+                                                                            <p class="text-muted">S/N is generated automatically when this letter is saved. Received date is recorded automatically.</p>
+                                                                        </div>
+
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
-                                                                                <label for="addressto">Address To<span class="text-danger">*</span></label>
-                                                                                <select id="addressTo" name="addressTo" class="" required autocomplete="off"></select>
+                                                                                <label for="addressTo">Address To<span class="text-danger">*</span></label>
+                                                                                <select id="addressTo" class=""></select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
-                                                                                <label for="sentby">Sent By<span class="text-danger">*</span></label>
-                                                                                <select id="sentBy" name="sentBy" class="" required autocomplete="off"></select>
+                                                                                <label for="sentBy">Sent By<span class="text-danger">*</span></label>
+                                                                                <select id="sentBy" class=""></select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-6 col-12">
@@ -98,32 +103,61 @@
                                                                         </div>
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
-                                                                                <label for="Contact">Letter My No<span class="text-danger">*</span></label>
-                                                                                <input id="letterMyNo" type="text" name="letterMyNo" class="form-control"  required autocomplete="off">
+                                                                                <label for="letterMyNo">Letter My No<span class="text-danger">*</span></label>
+                                                                                <input id="letterMyNo" type="text" class="form-control" required maxlength="100" autocomplete="off">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
-                                                                                <label for="date">Date<span class="text-danger">*</span></label>
-                                                                                <input id="date" type="text" name="date" class="form-control"  required autocomplete="off">
+                                                                                <label for="documentDate">Letter Date<span class="text-danger">*</span></label>
+                                                                                <input id="documentDate" type="date" class="form-control" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
-                                                                                <label for="actionTakenBy">Action Taken By<span class="text-danger">*</span></label>
-                                                                                <select id="actionTakenBy" name="actionTakenBy" class="" required autocomplete="off"></select>
+                                                                                <label for="actionTakenBy">Action Taken By</label>
+                                                                                <select id="actionTakenBy" class="" multiple></select>
                                                                             </div>
                                                                         </div>
-
                                                                         <div class="col-lg-6 col-12">
                                                                             <div class="form-group">
-                                                                                <label for="user_type">Repply Letter<span class="text-danger">*</span></label>
+                                                                                <label for="replyRequired">Reply Required?</label>
+                                                                                <select id="replyRequired" class="form-control">
+                                                                                    <option value="false">No</option>
+                                                                                    <option value="true">Yes</option>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>  
+                                                                        </div>
+                                                                        <div id="replyFields" class="row col-12" style="display:none">
+                                                                            <div class="col-lg-6 col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="replyLetterMyNo">Reply Letter My No<span class="text-danger">*</span></label>
+                                                                                    <input id="replyLetterMyNo" type="text" class="form-control" maxlength="100">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="replyDate">Reply Letter Date<span class="text-danger">*</span></label>
+                                                                                    <input id="replyDate" type="date" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="replyFile">Upload Reply Letter<span class="text-danger">*</span></label>
+                                                                                    <input id="replyFile" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <div class="form-group">
+                                                                                <label for="letterFile">Upload Letter<span class="text-danger">*</span></label>
+                                                                                <input id="letterFile" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            </form>
                                                         </div>
                                                         <div class="card-footer">
                                                             <div class="text-right">
@@ -154,208 +188,133 @@
         <script type="text/javascript" src="files/js/dataTables.responsive.min.js"></script>
         <script type="text/javascript" src="files/js/dataTables.searchHighlight.min.js"></script>
         <script>
-
             $.fn.dataTable.ext.errMode = 'none';
 
-            var dtable = $('#tbll').DataTable({
-                "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-                "pageLength": 5,
-                "ordering": true,
-                "autoWidth": false,
-                "processing": true,
-                "serverSide": true,
-                "order": [[0, "desc"]],
-                "searchHighlight": true,
-                "searchDelay": 350,
-                "ajax": {
-                    "url": "admin/letters",
-                    "contentType": "application/json",
-                    "type": "POST",
-                    "data": function (d) {
-                        return JSON.stringify(d);
-                    },
-                    error: function (xhr, error, code) {
-                        console.log(xhr);
-                        console.log(code);
-                    }
+            const table = $('#tbll').DataTable({
+                aLengthMenu: [[5, 10, 25, -1], [5, 10, 25, 'All']],
+                pageLength: 10,
+                processing: true,
+                serverSide: true,
+                order: [[0, 'desc']],
+                ajax: {
+                    url: 'letter/letters',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    data: d => JSON.stringify(d),
+                    error: xhr => console.error('Unable to load letters', xhr)
                 },
-                "columns": [
-                    {"data": "id", className: "text-right", "visible": false},
-                    {"data": "sno", "visible": false},
-                    {"data": "letterMyNo"},
-                    {"data": "addressTo"},
-                    {"data": "subject"},
-                    {"data": "sentBy"},
-                    {"data": "status"}
-                ], "language": {
-                    'loadingRecords': '&nbsp;',
-                    'processing': '<div class="loader2"></div>'
-                }, "createdRow": function (row, data) {
-                    let action_td = document.createElement('td');
-                    $(action_td).addClass('text-center');
-                    if (data['status'] === 'deactivated') {
-                        $(action_td).append('<a href="javascript:void(0)" class="rerec"><i class="feather icon-refresh-cw f-w-600 f-16 text-c-blue"></i></a>');
-                    } else {
-                        $(action_td).append('<a href="javascript:void(0)" class="editrec"><i class="icon feather icon-edit f-w-600 f-16 m-r-10 text-c-green"></i></a><a href="javascript:void(0)" class="delrec"><i class="feather icon-trash-2 f-w-600 f-16 text-danger"></i></a>');
+                columns: [
+                    { data: 'sno' },
+                    { data: 'date' },
+                    { data: 'letterMyNo' },
+                    { data: 'addressTo' },
+                    { data: 'subject' },
+                    { data: 'sentBy' },
+                    { data: 'reply' },
+                    {
+                        data: null,
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row) {
+                            return row.reply === 'Yes' && row.replyStatus === 'Not Replied'
+                                ? '<button type="button" class="btn btn-sm btn-primary saveReply" data-id="' + row.id + '">Save Reply</button>'
+                                : '';
+                        }
                     }
-                    $(row).append(action_td);
-                    var temp = '<div style="white-space:nowrap;"><img src=user_img?name=' + data['username'] + ' onerror="this.onerror=null; this.src=\'files/images/user.png\'"  class="img-radius img-40 align-top m-r-15" height="40" style="object-fit: cover;">' +
-                            '<div class="d-inline-block">' +
-                            ' <h6 style="word-break: break-all;word-wrap: break-word;" class="m-b-0">' + data['name'] + '</h6><p class="text-muted m-b-0">' + data['username'] + '</p></div></div>';
-                    $(row).find('td').eq(0).html(temp);
-                    setTableStatus($(row).find('td').eq(4));
-                    $(row).data('id', data['id']);
-                }
+                ],
+                createdRow: row => $(row).css('cursor', 'pointer')
             });
 
-            function setTableStatus(td) {
-                if ($(td).html().trim().startsWith('active')) {
-                    $(td).html('<label class="label label-success" style="white-space: nowrap">Active</label>');
-                } else if ($(td).html() === 'deactivated') {
-                    $(td).html('<label class="label label-danger" style="white-space: nowrap">Deactivated</label>');
-                }
+            function makeUserSelect(selector, placeholder, multiple) {
+                const select = new SlimSelect({
+                    select: selector,
+                    placeholder,
+                    searchHighlight: true,
+                    closeOnSelect: !multiple,
+                    allowDeselect: !multiple,
+                    ajax: function (search, callback) {
+                        fetch('letter/search-letter-users', {
+                            method: 'POST',
+                            body: new URLSearchParams({ search: search || '' })
+                        }).then(response => response.json()).then(callback)
+                          .catch(() => callback([]));
+                    }
+                });
+                return select;
             }
 
-            $('#addLetterBtn').click(function () {
-                $('#saveBtn').data('mode', 'save');
-                $('#saveBtn').html('<i class="icon feather icon-save"></i>Save');
-                clearForm();
+            const addressToSelect = makeUserSelect('#addressTo', 'Select recipient', false);
+            const sentBySelect = makeUserSelect('#sentBy', 'Select sender', false);
+
+            function divisionSelect(selector, placeholder, multiple) {
+                const select = new SlimSelect({
+                    select: selector,
+                    placeholder,
+                    searchHighlight: true,
+                    closeOnSelect: !multiple,
+                    allowDeselect: !multiple,
+                    ajax: function (search, callback) {
+                        fetch('letter/search-division-users', {
+                            method: 'POST',
+                            body: new URLSearchParams({ search: search || '' })
+                        }).then(response => response.json()).then(callback)
+                          .catch(() => callback([]));
+                    }
+                });
+                return select;
+            }
+            const actionTakenBySelect = divisionSelect('#actionTakenBy', 'Select action owners', true);
+
+            $('#addLetterBtn').on('click', function () {
+                $('#letterForm')[0].reset();
+                addressToSelect.set('');
+                sentBySelect.set('');
+                actionTakenBySelect.set([]);
+                $('#replyFields').hide();
+                $('#replyLetterMyNo, #replyDate, #replyFile').prop('required', false);
+                const today = new Date();
+                $('#documentDate').val(today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0'));
                 $('#tableSection').hide();
                 $('#formSection').fadeIn();
             });
-            $('.cls-card').click(function () {
+
+            $('.cls-card').on('click', function () {
                 $('#formSection').hide();
                 $('#tableSection').fadeIn();
             });
-            function clearForm() {
-                $('#formSection').find('input[type!=search]').val('');
-                $('#formSection').find('select').each(function () {
-                    if ($(this).data('select')) {
-                        if ($(this).data('select').ajax) {
-                            $(this).data('select').data.data = [];
-                        }
-                        $(this).data('select').set('');
-                    }
-                });
-            }
 
-            $('#uimguploadbtn').find('a').click(function () {
-                $('#user_image').click();
-            });
-            var user_type = new SlimSelect({
-                select: '#user_type',
-                placeholder: "Select a Usertype",
-                searchHighlight: true,
-
-                ajax: function (search, callback) {
-                    fetch('admin/search-user-types', {
-                        method: 'POST',
-                        body: new URLSearchParams({search: search || ''})
-                    }).then(res => res.json()).then((data) => {
-                        callback(data);
-                    });
-                },
-                allowDeselect: true,
-                deselectLabel: '<span class="red">✖</span>'
-            });
-            var user_designation = new SlimSelect({
-                select: '#user_designation',
-                placeholder: "Select user designation",
-                searchHighlight: true,
-
-                ajax: function (search, callback) {
-                    fetch('admin/search-user-designation', {
-                        method: 'POST',
-                        body: new URLSearchParams({search: search || ''})
-                    }).then(res => res.json()).then((data) => {
-                        callback(data);
-                    });
-                },
-                allowDeselect: true,
-                deselectLabel: '<span class="red">✖</span>'
-            });
-            $('#user_type').data('select', user_type);
-
-            $(document).on('click', '.editrec', function () {
-                loadDiv($('#tableSection'));
-                let id = $(this).parents('tr').data('id');
-                fetch('admin/user/' + id).then(resp => resp.json())
-                        .then((data) => {
-                            clearForm();
-                            $('#name').val(data.name);
-                            $('#username').val(data.username);
-                            if (data.userType) {
-                                user_type.setData([{value: data.userType.id, text: data.userTypeName}]);
-                                user_type.set(data.userType.id);
-                            }
-                            $('#saveBtn').data('mode', 'update');
-                            $('#saveBtn').html('<i class="icon feather icon-save"></i>Update');
-                            $('#saveBtn').data('id', id);
-                            $('#formSection').fadeIn();
-                            $('#tableSection').hide();
-
-                            finishLoadDiv($('#tableSection'));
-                        });
+            $('#replyRequired').on('change', function () {
+                const needsReply = this.value === 'true';
+                $('#replyFields').toggle(needsReply);
+                $('#replyLetterMyNo, #replyDate, #replyFile').prop('required', needsReply);
             });
 
-            $('#saveBtn').click(function () {
-                if ($('#name').val().trim() === '') {
-                    Swal.fire("Empty Name!", "Please Enter a Valid Name!", "warning");
+            $('#saveBtn').on('click', function () {
+                const form = $('#letterForm')[0];
+                if (!form.reportValidity()) return;
+                if (!addressToSelect.selected() || !sentBySelect.selected()) {
+                    Swal.fire('Required fields', 'Choose both Address To and Sent By.', 'warning');
                     return;
                 }
-                if ($('#username').val().trim() === '') {
-                    Swal.fire("Empty Username!", "Please Enter a Valid Username!", "warning");
-                    return;
-                }
-//                if ($('#add').val().trim() === '') {
-//                    Swal.fire("Empty addresss!", "Please Enter Address!", "warning");
-//                    return;
-//                }
-//                if ($('#email').val().trim() === '') {
-//                    Swal.fire("Empty Email!", "Please Enter valid Email!", "warning");
-//                    return;
-//                }
-//                if ($('#tpno').val() === '') {
-//                    Swal.fire("Empty contact!", "Please Enter valid mobile number!", "warning");
-//                    return;
-//                }
-//                if ($('#pw').val().trim() === '') {
-//                    Swal.fire("Empty password!", "Please Enter valid mobile password!", "warning");
-//                    return;
-//                }
-//                if ($('#emp').val() === '') {
-//                    Swal.fire("Empty employeeNumber!", "Please Enter Employee number!", "warning");
-//                    return;
-//                }
-                if ($('#user_type').val() === null) {
-                    Swal.fire("UserType not Selected!", "Please Select a UserType!", "warning");
-                    return;
-                }
-//                if ($('#user_designation').val() === null) {
-//                    Swal.fire("UserDesignation not Selected!", "Please Select a UserDesignation!", "warning");
-//                    return;
-//                }
-                
-
-                let mode = $('#saveBtn').data('mode');
 
                 const formData = new FormData();
-                if (mode === 'update') {
-                    formData.append('id', $('#saveBtn').data('id'));
+                formData.append('addressTo', addressToSelect.selected());
+                formData.append('sentBy', sentBySelect.selected());
+                formData.append('subject', $('#subject').val().trim());
+                formData.append('letterMyNo', $('#letterMyNo').val().trim());
+                formData.append('documentDate', $('#documentDate').val());
+                (actionTakenBySelect.selected() || []).forEach(id => formData.append('actionTakenBy', id));
+                formData.append('replyRequired', $('#replyRequired').val());
+                formData.append('letterFile', $('#letterFile')[0].files[0]);
+                if ($('#replyRequired').val() === 'true') {
+                    formData.append('replyLetterMyNo', $('#replyLetterMyNo').val().trim());
+                    formData.append('replyDate', $('#replyDate').val());
+                    formData.append('replyFile', $('#replyFile')[0].files[0]);
                 }
-                formData.append('name', $('#name').val().trim());
-                formData.append('username', $('#username').val().trim());
-                formData.append('type', $('#user_type').val());
-                formData.append('address', $('#add').val().trim());
-                formData.append('tpno', $('#tp').val());
-                formData.append('email', $('#email').val().trim());
-                formData.append('password', $('#pw').val().trim());
-                formData.append('empno', $('#emp').val());
-                formData.append('designation', $('#user_designation').val());
 
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "User Will be " + (mode === 'update' ? 'Updated' : 'Saved') + " !",
+                    title: 'Save this letter?',
+                    text: "Designation Will be saved and you won't be able to revert this!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -363,143 +322,109 @@
                     confirmButtonText: 'Yes, Continue!',
                     showLoaderOnConfirm: true,
                     searchHighlight: true,
-                    preConfirm: () => {
-                        return fetch('admin/' + $('#saveBtn').data('mode') + '-user', {
-                            method: 'POST',
-                            body: formData
-                        }).then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText);
-                            }
-                            return response.json();
-                        }).catch(error => {
-                            Swal.showValidationMessage('Request failed:' + error);
-                        });
-                    },
+                    preConfirm: () => fetch('letter/save-letter', { method: 'POST', body: formData })
+                        .then(async response => {
+                            const result = await response.json();
+                            if (!response.ok) throw new Error(result.message || 'Could not save the letter.');
+                            return result;
+                        })
+                        .catch(error => Swal.showValidationMessage(error.message)),
                     allowOutsideClick: () => !Swal.isLoading()
-
-                }).then((result) => {
-                    if (result.value) {
-                        if (result.value.status !== 200) {
-                            Swal.fire('Error!', result.value.msg, 'error');
-                        } else {
-                            Swal.fire('Successfull!', 'User has been updated.', 'success');
-                            dtable.ajax.reload();
-                            $('#formSection').hide();
-                            $('#tableSection').fadeIn();
-                        }
+                }).then(result => {
+                    if (result.isConfirmed && result.value && result.value.status === 200) {
+                        Swal.fire('Saved', result.value.message, 'success');
+                        table.ajax.reload();
+                        $('#formSection').hide();
+                        $('#tableSection').fadeIn();
                     }
                 });
             });
 
-            $(document).on('click', '.delrec', function () {
-                let id = $(this).parents('tr').data('id');
-                console.log(id);
+            $('#tbll').on('click', '.saveReply', function () {
+                const letterId = $(this).data('id');
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "This User Will be Deleted!",
-                    icon: 'warning',
+                    title: 'Save Reply Letter',
+                    html: '<input id="swalReplyNo" class="swal2-input" placeholder="Reply Letter My No" required>' +
+                          '<label for="swalReplyDate">Reply Letter Date</label>' +
+                          '<input id="swalReplyDate" type="date" class="swal2-input">' +
+                          '<label for="swalReplyFile">Reply Letter File</label>' +
+                          '<input id="swalReplyFile" type="file" class="swal2-file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Proceed!',
+                    confirmButtonText: 'Save Reply',
                     showLoaderOnConfirm: true,
                     preConfirm: () => {
-                        return fetch('admin/deactivate-user', {
-                            method: 'POST',
-                            body: new URLSearchParams({
-                                id: id
+                        const popup = Swal.getPopup();
+                        const replyNo = popup.querySelector('#swalReplyNo').value.trim();
+                        const replyFile = popup.querySelector('#swalReplyFile').files[0];
+                        if (!replyNo || !replyFile) {
+                            Swal.showValidationMessage('Enter the reply number and select the reply file.');
+                            return false;
+                        }
+                        const formData = new FormData();
+                        formData.append('replyLetterMyNo', replyNo);
+                        formData.append('replyDate', popup.querySelector('#swalReplyDate').value);
+                        formData.append('replyFile', replyFile);
+                        return fetch('letter/letters/' + letterId + '/reply', { method: 'POST', body: formData })
+                            .then(async response => {
+                                const result = await response.json();
+                                if (!response.ok) throw new Error(result.message || 'Could not save reply letter.');
+                                return result;
                             })
-                        }).then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText);
-                            }
-                            return response.json();
-                        }).catch(error => {
-                            Swal.showValidationMessage('Request failed:' + error);
-                        });
+                            .catch(error => Swal.showValidationMessage(error.message));
                     },
                     allowOutsideClick: () => !Swal.isLoading()
-
-                }).then((result) => {
-                    if (result.value) {
-                        if (result.value.status !== 200) {
-                            Swal.fire('Error!', result.value.msg, 'error');
-                        } else {
-                            Swal.fire('Successfull!', 'User has been Deactivated !', 'success');
-                            dtable.ajax.reload();
-                            $('#formSection').hide();
-                            $('#tableSection').fadeIn();
-                        }
+                }).then(result => {
+                    if (result.isConfirmed && result.value && result.value.status === 200) {
+                        Swal.fire('Saved', result.value.message, 'success');
+                        table.ajax.reload();
                     }
                 });
             });
 
-            $(document).on('click', '.rerec', function () {
-                let id = $(this).parents('tr').data('id');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "This User Will be Activated!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Proceed!',
-                    showLoaderOnConfirm: true,
-                    preConfirm: () => {
-                        return fetch('admin/reactivate-user', {
-                            method: 'POST',
-                            body: new URLSearchParams({
-                                id: id
-                            })
-                        }).then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText);
-                            }
-                            return response.json();
-                        }).catch(error => {
-                            Swal.showValidationMessage('Request failed:' + error);
-                        });
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
-
-                }).then((result) => {
-                    if (result.value) {
-                        if (result.value.status !== 200) {
-                            Swal.fire('Error!', result.value.msg, 'error');
-                        } else {
-                            Swal.fire('Successfull!', 'User has been Activated !', 'success');
-                            dtable.ajax.reload();
-                            $('#formSection').hide();
-                            $('#tableSection').fadeIn();
-                        }
-                    }
+            function escapeHtml(value) {
+                return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) {
+                    return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[character];
                 });
-            });
-
-            $.fn.dataTable.Debounce = function (table) {
-                var tableId = table.settings()[0].sTableId;
-                $('.dataTables_filter input[aria-controls="' + tableId + '"]')
-                        .unbind()
-                        .bind('input', (delay(function (e) {
-                            table.search($(this).val()).draw();
-                            return;
-                        }, 500)));
-            };
-
-            function delay(callback, ms) {
-                var timer = 0;
-                return function () {
-                    var context = this, args = arguments;
-                    clearTimeout(timer);
-                    timer = setTimeout(function () {
-                        callback.apply(context, args);
-                    }, ms || 0);
-                };
             }
 
-            var debounce = new $.fn.dataTable.Debounce(dtable);
+            $('#tbll tbody').on('click', 'tr', function (event) {
+                if ($(event.target).closest('button, a').length) return;
+                const row = table.row(this).data();
+                if (!row) return;
+                fetch('letter/details/' + row.id)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Could not load letter details.');
+                        return response.json();
+                    })
+                    .then(details => {
+                        const actionOwners = (details.actionTakenBy || []).map(escapeHtml).join(', ') || '—';
+                        const replyFileLink = details.replyFileUrl
+                            ? '<a target="_blank" rel="noopener" href="' + escapeHtml(details.replyFileUrl) + '">Open reply letter</a>'
+                            : '—';
+                        const body = '<div class="text-left">' +
+                            '<p><b>S/N:</b> ' + escapeHtml(details.sno) + '</p>' +
+                            '<p><b>Received date:</b> ' + escapeHtml(details.receivedDate) + '</p>' +
+                            '<p><b>Letter date:</b> ' + escapeHtml(details.documentDate) + '</p>' +
+                            '<p><b>Letter My No:</b> ' + escapeHtml(details.letterMyNo) + '</p>' +
+                            '<p><b>Address To:</b> ' + escapeHtml(details.addressTo) + '</p>' +
+                            '<p><b>Sent By:</b> ' + escapeHtml(details.sentBy) + '</p>' +
+                            '<p><b>Subject:</b> ' + escapeHtml(details.subject) + '</p>' +
+                            '<p><b>Action Taken By:</b> ' + actionOwners + '</p>' +
+                            '<p><b>Reply Required:</b> ' + (details.replyRequired ? 'Yes' : 'No') + '</p>' +
+                            '<p><b>Reply Status:</b> ' + (details.replyFileUrl ? 'Replied' : 'Not Replied') + '</p>' +
+                            '<p><b>Reply Letter My No:</b> ' + escapeHtml(details.replyLetterMyNo || '—') + '</p>' +
+                            '<p><b>Reply date:</b> ' + escapeHtml(details.replyDate || '—') + '</p>' +
+                            '<p><b>Status:</b> ' + escapeHtml(details.status) + '</p>' +
+                            '<p><b>Letter file:</b> <a target="_blank" rel="noopener" href="' + escapeHtml(details.letterFileUrl) + '">Open letter</a></p>' +
+                            '<p><b>Reply file:</b> ' + replyFileLink + '</p></div>';
+                        Swal.fire({title: 'Letter Details', html: body, width: 700});
+                    })
+                    .catch(error => Swal.fire('Error', error.message, 'error'));
+            });
 
+            if (new URLSearchParams(window.location.search).get('new') === '1') {
+                $('#addLetterBtn').trigger('click');
+            }
         </script>
     </body>
 </html>

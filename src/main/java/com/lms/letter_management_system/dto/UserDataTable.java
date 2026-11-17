@@ -9,10 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- *
- * @author rusir
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -21,7 +17,7 @@ public class UserDataTable {
     
     public Integer id;
     public String username;
-    public String name;
+    public String fullName;
     public String userType;
     public String modBy;
     public String modOn;

@@ -59,11 +59,14 @@ public class PageController {
     public String letters() {
         return "letter";
     }
-    @GetMapping("/salarySlip")
-    public String sallarySlip() {
-//        Integer uid = (Integer) session.getAttribute("uid");
-//        sal.getEmpSalary(uid);
-        return "salary";
+    @GetMapping("/topLevelDesignation")
+    public String topLevelDesignation() {
+        return "topLevel";
+    }
+
+    @GetMapping("/divisionLevelDesignation")
+    public String divisionLevelDesignation() {
+        return "divisionLevel";
     }
 
     @GetMapping("/salarySheet")
